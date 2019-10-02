@@ -1,7 +1,5 @@
 require('dotenv').config();
 var pg = require('pg');
-//or native libpq bindings
-//var pg = require('pg').native
 
 var conString = process.env.DB_CONN;
 
@@ -18,6 +16,42 @@ client.connect(function(err) {
     client.end();
   });
 });
+
+const http = require('http');
+const url = require('url');
+
+module.exports = http.createServer((req, res) => {
+
+    var service = require('./service.js');
+    const reqUrl = url.parse(req.url, true);
+
+    // GET Endpoint
+    if (reqUrl.pathname == '/sample' && req.method === 'GET') {
+        console.log('Request Type:' +
+            req.method + ' Endpoint: ' +
+            reqUrl.pathname);
+
+        service.sampleRequest(req, res);
+
+        // POST Endpoint
+    } else if (reqUrl.pathname == '/test' && req.method === 'POST') {
+        console.log('Request Type:' +
+            req.method + ' Endpoint: ' +
+            reqUrl.pathname);
+
+        service.testRequest(req, res);
+
+    } else {
+        console.log('Request Type:' +
+            req.method + ' Invalid Endpoint: ' +
+            reqUrl.pathname);
+
+        service.invalidRequest(req, res);
+
+    }
+});
+
+
 
 const http = require('http');
 
@@ -60,50 +94,3 @@ http.createServer((req, res) => {
 }).listen(8080, () => {
     console.log('Server is running at http://127.0.0.1:8080/');
 });
-
-
-
-
-/*
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-const port = 3000
-
-app.use(bodyParser.json())
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-)
-
-app.get('/', (request, response) => {
-    response.json({ info: 'Node.js, Express, and Postgres API' })
-  })
-
-  app.listen(port, () => {
-    console.log(`App running on port ${port}.`)
-  })
-*/
-
-/*
-  const { Pool, Client } = require('pg')
-
-const connectionString = 'postgres://osdtvtdq:CVBPgsz-w0p9wGShZ96JAl-ZBrirwZYv@salt.db.elephantsql.com:5432/osdtvtdq'
-const pool = new Pool({
-  connectionString: connectionString,
-})
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
-const client = new Client({
-  connectionString: connectionString,
-})
-client.connect()
-client.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  client.end()
-})
-
-*/
