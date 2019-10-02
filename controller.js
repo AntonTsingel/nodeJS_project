@@ -7,7 +7,6 @@ require('dotenv').config();
 
 const client = new pg.Client(process.env.DB_CONN);
 
-
 client.connect(function(err) {
   if(err) {
     return console.error('could not connect to postgres', err);
@@ -36,6 +35,7 @@ module.exports = http.createServer((req, res) => {
     } else {
         console.log('Request Type:' +
             req.method + ' Invalid Endpoint: ' + reqUrl.pathname);
+
         service.invalidRequest(req, res);
 
     }
