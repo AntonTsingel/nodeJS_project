@@ -30,7 +30,7 @@ module.exports = http.createServer((req, res) => {
             req.method + ' Endpoint: ' +
             reqUrl.pathname);
         service.sampleRequest(req, res);
-        // POST Endpoint
+    // POST Endpoint
     } else if (reqUrl.pathname == '/test' && req.method === 'POST') {
         console.log('Request Type:' +
             req.method + ' Endpoint: ' +
