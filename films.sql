@@ -1,3 +1,7 @@
+--Downloaded from classifiers.ru
+--A. Faifel <toller@rbcmail.ru>
+--A. Derbov [http://derbov.ru/]
+--D. Entelis <dentelis@gmail.com>
 -- Фильмы
 
 CREATE TABLE `cl_table30` (

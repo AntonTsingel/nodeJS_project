@@ -16,21 +16,23 @@ client.connect(function(err) {
       return console.error('error running query', err);
     }
     console.log(result.rows[0].theTime);
-    client.end();
+   // client.end();
   });
 });
-
 
 module.exports = http.createServer((req, res) => {
     const reqUrl = url.parse(req.url, true);
     // GET Endpoint
     if (reqUrl.pathname == '/sample' && req.method === 'GET') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
-        service.sampleRequest(req, res);
+        client.query('SELECT * FROM "public"."student" WHERE rollnumber = 10001', function (error, results) {
+          if (error) throw error;
+          console.log({ error: false, data: results[1], message: 'users list.'});
+      });
     // POST Endpoint
     } else if (reqUrl.pathname == '/test' && req.method === 'POST') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
-        service.testRequest(req, res);
+        service.testRequest(req, res); 
 
     } else {
         console.log('Request Type:' +
