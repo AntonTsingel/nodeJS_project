@@ -22,9 +22,9 @@ const getFilmById = (request, response) => {
 }
 
 const createFilm = (request, response) => {
-  const { title, email } = request.body
+  const { title, genre } = request.body
 
-  pool.query('INSERT INTO film (title, email) VALUES ($1, $2)', [title, email], (error, results) => {
+  pool.query('INSERT INTO film (title, genre) VALUES ($1, $2)', [title, genre], (error, results) => {
     if (error) {
       throw error
     }
@@ -34,11 +34,11 @@ const createFilm = (request, response) => {
 
 const updateFilm = (request, response) => {
   const id = parseInt(request.params.id)
-  const { title, email } = request.body
+  const { title, genre } = request.body
 
   pool.query(
-    'UPDATE films SET title = $1, email = $2 WHERE id = $3',
-    [title, email, id],
+    'UPDATE films SET title = $1, genre = $2 WHERE id = $3',
+    [title, genre, id],
     (error, results) => {
       if (error) {
         throw error
