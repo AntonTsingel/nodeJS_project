@@ -25,7 +25,7 @@ module.exports = http.createServer((req, res) => {
     // GET Endpoint
     if (reqUrl.pathname == '/sample' && req.method === 'GET') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
-        client.query('SELECT * FROM "public"."student" ', function (error, result) {
+        client.query('SELECT * FROM "public"."films"', function (error, result) {
           if (error) throw error;
           console.log(result.rows);
           res.end(`{{result.rows}}`);
