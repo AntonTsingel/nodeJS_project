@@ -16,7 +16,7 @@ client.connect(function(err) {
       return console.error('error running query', err);
     }
     console.log(result.rows[0].theTime);
-   // client.end();
+    //client.end();
   });
 });
 
@@ -25,9 +25,10 @@ module.exports = http.createServer((req, res) => {
     // GET Endpoint
     if (reqUrl.pathname == '/sample' && req.method === 'GET') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
-        client.query('SELECT * FROM "public"."student" WHERE rollnumber = 10001', function (error, results) {
+        client.query('SELECT * FROM "public"."student" ', function (error, result) {
           if (error) throw error;
-          console.log({ error: false, data: results[1], message: 'users list.'});
+          console.log(result.rows);
+          res.end(`{{result.rows}}`);
       });
     // POST Endpoint
     } else if (reqUrl.pathname == '/test' && req.method === 'POST') {
