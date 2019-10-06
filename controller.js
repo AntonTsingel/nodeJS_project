@@ -23,15 +23,25 @@ client.connect(function(err) {
 module.exports = http.createServer((req, res) => {
     const reqUrl = url.parse(req.url, true);
     // GET Endpoint
-    if (reqUrl.pathname == '/sample' && req.method === 'GET') {
+    if (reqUrl.pathname == '/films' && req.method === 'GET') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
         client.query('SELECT * FROM "public"."films"', function (error, result) {
           if (error) throw error;
           console.log(result.rows);
           res.end(`{{result.rows}}`);
       });
-    // POST Endpoint
-    } else if (reqUrl.pathname == '/test' && req.method === 'POST') {
+    
+    } 
+    else if (reqUrl.pathname == '/films/id1' && req.method === 'GET') {
+      console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
+      client.query('SELECT * FROM "public"."films" WHERE id = 1', function (error, result) {
+        if (error) throw error;
+        console.log(result.rows);
+        res.end(`{{result.rows}}`);
+    });
+  // POST Endpoint
+    }
+    else if (reqUrl.pathname == '/test' && req.method === 'POST') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
         service.testRequest(req, res); 
 
