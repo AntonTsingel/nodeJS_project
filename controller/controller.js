@@ -1,6 +1,7 @@
 const http = require('http');
 const url = require('url');
 const pg = require('pg');
+const routing = require('../routing');
 const service = require('../service/service');
 require('dotenv').config();
 
@@ -22,6 +23,14 @@ client.connect(function(err) {
 
 module.exports = http.createServer((req, res) => {
     const reqUrl = url.parse(req.url, true);
+    var jsonString = '';
+    res.setHeader('Content-Type', 'application/json');
+    req.on('data', (data) => {
+        jsonString += data;
+    });
+    req.on('end', () => {
+        routing.define(req, res, jsonString);
+    });
     // GET Endpoint
     if (reqUrl.pathname == '/sample' && req.method === 'GET') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
