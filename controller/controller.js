@@ -23,26 +23,27 @@ client.connect(function(err) {
 
 module.exports = http.createServer((req, res) => {
     const reqUrl = url.parse(req.url, true);
-    var jsonString = '';
-    res.setHeader('Content-Type', 'application/json');
-    req.on('data', (data) => {
-        jsonString += data;
-    });
-    req.on('end', () => {
-        routing.define(req, res, jsonString);
-    });
+    // var jsonString = '';
+    // //res.setHeader('Content-Type', 'application/json');
+    // req.on('data', (data) => {
+    //     jsonString += data;
+    // });
+    // req.on('end', () => {
+    //     routing.define(req, res, jsonString);
+    // });
+    
     // GET Endpoint
     if (reqUrl.pathname == '/sample' && req.method === 'GET') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
         client.query('SELECT * FROM "public"."films"', function (error, result) {
           if (error) throw error;
           console.log(result.rows);
-          res.end(`{{result.rows}}`);
+          res.end(`${result.rows}`);
       });
     // POST Endpoint
     } else if (reqUrl.pathname == '/test' && req.method === 'POST') {
         console.log('Request Type:' + req.method + ' Endpoint: ' + reqUrl.pathname);
-        service.testRequest(req, res); 
+        service.testRequest(req, res);
 
     } else {
         console.log('Request Type:' +
