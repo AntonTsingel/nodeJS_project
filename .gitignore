@@ -2,3 +2,5 @@
 .env
 db.sql
 /.vscode
+test/
+server2.js
