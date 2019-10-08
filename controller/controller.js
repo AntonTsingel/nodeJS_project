@@ -24,7 +24,7 @@ client.connect(function(err) {
 module.exports = http.createServer((req, res) => {
     const reqUrl = url.parse(req.url, true);
     // var jsonString = '';
-    // //res.setHeader('Content-Type', 'application/json');
+    // res.setHeader('Content-Type', 'application/json');
     // req.on('data', (data) => {
     //     jsonString += data;
     // });
